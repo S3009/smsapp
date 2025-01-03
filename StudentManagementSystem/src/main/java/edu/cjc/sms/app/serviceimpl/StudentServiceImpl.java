@@ -25,6 +25,12 @@ public class StudentServiceImpl implements StudentServiceI {
 		// TODO Auto-generated method stub
 		return sr.findAll();
 	}
+	@Override
+	public List<Student> getBatchesStudent(String batchNumber) {
+
+		List<Student> list=sr.findAllByBatchNumber(batchNumber);
+		return list;
+	}
 	
 
 }

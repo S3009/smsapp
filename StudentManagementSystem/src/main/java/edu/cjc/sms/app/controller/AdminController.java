@@ -16,10 +16,10 @@ import edu.cjc.sms.app.servicei.StudentServiceI;
 public class AdminController {
 
 	int a;
-	
+
 	@Autowired
 	StudentServiceI ssi;
-	
+
 	@RequestMapping("/")
 	public String preLogin() {
 
@@ -27,26 +27,39 @@ public class AdminController {
 	}
 
 	@RequestMapping("login")
-	public String onlogin(@RequestParam("username") String u, @RequestParam("password") String p,Model m) {
+	public String onlogin(@RequestParam("username") String u, @RequestParam("password") String p, Model m) {
 		if (u.equals("ADMIN") && p.equals("ADMIN")) {
-			List<Student> list=ssi.getAllStudents();
-			m.addAttribute("data",list);
+			List<Student> list = ssi.getAllStudents();
+			m.addAttribute("data", list);
 			return "adminscreen";
 		} else {
 			return "login";
 		}
 	}
-	
+
 	@RequestMapping("/enroll_student")
-	public String addStudent(@ModelAttribute Student s,Model m) {
-		
-		List<Student> list=ssi.addStudent(s);
+	public String addStudent(@ModelAttribute Student s, Model m) {
+
+		List<Student> list = ssi.addStudent(s);
 		m.addAttribute("data", list);
 		return "adminscreen";
-		
+
 	}
-	
-	
-	 
+
+	@RequestMapping("/search")
+	public String searchStudent(@RequestParam("batchNumber") String batchNumber,Model m) {
+
+		List<Student> list = ssi.getBatchesStudent(batchNumber);
+		if (list.size() > 0) {
+			m.addAttribute("data", list);
+			return "adminscreen";
+		} else {
+			List<Student> l=ssi.getAllStudents();
+			m.addAttribute("data", l);
+			m.addAttribute("message", "NO record available for the batch -> "+batchNumber);
+			return "adminscreen";
+		}
+
+	}
 
 }
