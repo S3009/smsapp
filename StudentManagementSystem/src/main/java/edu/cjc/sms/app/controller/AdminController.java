@@ -26,7 +26,7 @@ public class AdminController {
 		return "login";
 	}
 
-	@RequestMapping("login")
+	@RequestMapping("/login")
 	public String onlogin(@RequestParam("username") String u, @RequestParam("password") String p, Model m) {
 		if (u.equals("ADMIN") && p.equals("ADMIN")) {
 			List<Student> list = ssi.getAllStudents();
@@ -60,6 +60,40 @@ public class AdminController {
 			return "adminscreen";
 		}
 
+	}
+	
+	@RequestMapping("/fees")
+	public String onfees(@RequestParam("id") int id,Model m) {
+		
+		Student s=ssi.getStudent(id);
+		m.addAttribute("st", s);
+		return "fees";
+	}
+	
+	@RequestMapping("/payfees")
+	public String payfees(@RequestParam("studentid")int id,@RequestParam("amount") float amt,Model m) {
+		List<Student> list=ssi.updateStudentFees(id,amt);
+		m.addAttribute("data", list);
+		return "adminscreen";
+	}
+	
+	@RequestMapping("/remove")
+	public String removeDelete(@RequestParam("id") int id,Model m) {
+		ssi.removeStudent(id);
+		
+		List<Student> list=ssi.getAllStudents();
+		m.addAttribute("data",list);
+		return "adminscreen";
+	}
+	
+	
+	@RequestMapping("/batch")
+	public String shiftBatch(@RequestParam("id") int id,Model m) {
+		
+		List<Student> list=ssi.shiftBatch(id);
+		
+		
+		return "adminscreen";
 	}
 
 }

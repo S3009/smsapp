@@ -35,6 +35,17 @@ form {
 	background-repeat: no-repeat;
 }
 </style>
+<script type="text/javascript">
+	function fees() {
+		document.fn.action="/fees";
+		document.fn.submit();
+	}
+	
+	function remove(){
+		document.fn.action="/remove"
+		document.action.submit();
+	}
+</script>
 </head>
 <body>
 	<div class="card">
@@ -154,22 +165,23 @@ form {
 		</section>
 		<section class="view" style="height: 530px" id="view">
 			<h1 class="text-center">Student Details..!</h1>
-				<div class="text-center w-100">
-					<form action="search" class="w-100">
-						<select class="select form-control-sm border border-primary"
-							name="batchNumber">
-							<option value="#" slected>Select Batch Number</option>
-							<option value="FDJ-185">FDJ-185</option>
-												<option value="REG-185">REG-185</option>
-												<option value="FDJ-161">FDJ-161</option>
-												<option value="REG-161">REG-161</option>
-						</select>
-						<button class="btn btn-outline-primary mb-1">Search</button>
-					</form>
-					<marquee>
-						<h1 style="color: red;">${message }</h1>
-					</marquee>
-				</div>
+			<div class="text-center w-100">
+				<form action="search" class="w-100">
+					<select class="select form-control-sm border border-primary"
+						name="batchNumber">
+						<option value="#" slected>Select Batch Number</option>
+						<option value="FDJ-185">FDJ-185</option>
+						<option value="REG-185">REG-185</option>
+						<option value="FDJ-161">FDJ-161</option>
+						<option value="REG-161">REG-161</option>
+					</select>
+					<button class="btn btn-outline-primary mb-1">Search</button>
+				</form>
+				<marquee>
+					<h1 style="color: red;">${message }</h1>
+				</marquee>
+			</div>
+			<form name="fn">
 				<table class="table table-hover" style="font-size: small">
 					<thead>
 						<tr>
@@ -177,11 +189,12 @@ form {
 							<th>Student Name</th>
 							<th>Student Email</th>
 							<th>Age</th>
-							<th>Collage Name</th>
+							<th>College Name</th>
 							<th>Course Name</th>
 							<th>Bath No</th>
 							<th>Mode</th>
-							<th>Fees Recived</th>
+							<th>Fees Received</th>
+							<th>Select</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -197,19 +210,22 @@ form {
 								<td>${s.batchNumber}</td>
 								<td>${s.batchMode}</td>
 								<td>${s.feesPaid}</td>
+								<td><input type="radio" name="id" value="${s.studentId}">
+								</td>
 								<td>
 									<div class="btn-group btn-group-sm" role="group"
 										aria-label="...">
-										<button class="btn btn-outline-success">Pay- Fees</button>
-										<button class="btn btn-outline-primary">Shift- Batch</button>
-										<button class="btn btn-outline-danger">Remove</button>
+										<button class="btn btn-outline-success" onclick="fees()">Pay-Fees</button>
+										<button class="btn btn-outline-primary" onclick="batch()">Shift-Batch</button>
+										<button class="btn btn-outline-danger" onclick="remove()">Remove</button>
 									</div>
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-			</section>
+			</form>
+		</section>
 	</div>
 </body>
 </html>
